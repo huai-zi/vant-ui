@@ -3,7 +3,6 @@
   <div id="page_index">
     <!-- 图片轮播展示 -->
     <Swiper :list='imgLists' :auto='true' height='200px' :loop='true' dots-position='center'>
-
     </Swiper>
   </div>
 </template>
