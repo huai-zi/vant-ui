@@ -1,0 +1,8 @@
+@import './variable.less';
+/** vux可配置主题覆盖 */
+
+@theme-color: @primary-color;
+
+@tab-text-active-color: @primary-color;
+@tab-bar-active-color: @primary-color;
+@tabbar-text-active-color: @primary-color;

@@ -1,0 +1,204 @@
+/**
+ * Created by guofei on 2018/1/31.
+ */
+import { AjaxPlugin,ToastPlugin  } from 'vux';
+import Vue from 'vue';
+import {loadScript} from "@/utils/common";
+Vue.use(ToastPlugin);
+const wxUtil={};
+//const version="201712221";//版本号
+let initWxUtilFlag=0;//0初始值，1表示成功，2表示失败，3表示过程中
+
+
+//获取页面授权用户openid
+/*wxUtil.getOpenid=function(){
+  return localStorage.getItem("openid");
+
+}*/
+wxUtil.config=function(option){//jssdk初始化配置
+  initWxUtilFlag=3;
+  let lacurl=location.href.split("#")[0];
+  return new Promise(function(resolve,reject){
+    loadScript("http://res.wx.qq.com/open/js/jweixin-1.2.0.js").then(()=>{
+      AjaxPlugin.$http.post(
+        "/wx/oauth/sign",
+        {"url":encodeURIComponent(lacurl)}
+      ).then((res)=>{
+        if(res.data && res.data.code==1 && res.data.data){
+          init(res.data.data,option,resolve,reject);
+        }else{
+          console.log("初始化jssdk失败,返回结果："+JSON.stringify(res.data));
+          reject("初始化jssdk失败");
+        }
+      }).catch((err)=>{
+        console.log("初始化jssdk失败："+JSON.stringify(err));
+        reject("初始化jssdk失败");
+      });
+    });
+  });
+}
+function init(configData,option,resolve,reject){//jssdk初始化
+  if(!option||!configData){
+    console.log("jssdk初始化失败，初始化参数为空");
+    return;
+  }
+  let jsApiList=['checkJsApi'];
+  if(option.hideOptionMenu){
+    jsApiList.push('hideOptionMenu');
+  }
+  if(option.closeWindow){
+    jsApiList.push('closeWindow');
+  }
+  if(option.uploadImage){
+    jsApiList.push('chooseImage');
+    jsApiList.push('uploadImage');
+  }
+  if(option.getLocation){
+    jsApiList.push('getLocation');
+  }
+
+  wx.config({//微信浏览器自带的api接口
+    debug:false,//true为开启调式模式，微信服务器返回的值都进行alert()
+    appId:configData.appId,
+    timestamp: configData.timestamp, //时间戳
+    nonceStr: configData.nonceStr, //随机串
+    signature: configData.signature,//后台生成sha1的签名
+    jsApiList: jsApiList
+  });
+  wx.error(function(err){
+    initWxUtilFlag=2;
+    console.log("初始化jssdk失败："+JSON.stringify(err));
+    console.log("初始化jssdk失败,参数："+JSON.stringify(configData));
+    reject("初始化jssdk失败");
+  });
+  wx.checkJsApi({//微信浏览器自带的api接口
+    jsApiList: jsApiList,
+    success: function (res) {
+      let checkResult=true;
+      if(option.hideOptionMenu){
+        checkResult=res.checkResult.hideOptionMenu;
+      }
+      if(checkResult && option.closeWindow){
+        checkResult=res.checkResult.closeWindow;
+      }
+      if(checkResult && option.uploadImage){
+        checkResult=res.checkResult.chooseImage&&res.checkResult.uploadImage;
+      }
+      if(checkResult && option.getLocation){
+        checkResult=res.checkResult.getLocation;
+      }
+      if(!checkResult){
+        Vue.$vux.toast.text("您的微信版本太低,请升级","bottom");
+      }
+    }
+  });
+
+  wx.ready(function(){
+    initWxUtilFlag=1;
+    Promise.all([getLocation(option)]).then(function(results){
+      console.log("初始化jssdk完成");
+      if(results && results.length>0){
+        console.log("wechat工具返回数据"+JSON.stringify(results));
+        resolve(results[0]);
+      }else{
+        reject("jssdk初始化失败,results="+JSON.stringify(results));
+      }
+    });
+    if(option.hideOptionMenu){
+      wx.hideOptionMenu();
+    }
+  });
+}
+
+//关闭当前页面窗口，即回到公众号会话窗口
+wxUtil.closeWindow=function(){
+  if(initWxUtilFlag==1){
+    wx.closeWindow();
+  }else{
+    console.log('请预先初始化jssdk,比如wx.config({closeWindow:true})');
+  }
+};
+//上传图片
+wxUtil.uploadImage=function(option){
+  let names;
+  switch(option)
+  {
+    case 1:
+      names = ["album"];
+      break;
+    case 2:
+      names = ["camera"];
+      break;
+    default:
+      names = ["album","camera"];
+  };
+  if(initWxUtilFlag==1){
+    return new Promise(function(resolve,reject){
+      wx.chooseImage({//选择图片,准备上传
+        count:1,//一次上传多个localId,由于是多线程会导致重复上传同一个localId多次
+        sizeType: ['original', 'compressed'],
+        sourceType: names,
+        success: function (res) {
+          var localIds = res.localIds;
+          if(localIds && localIds.length>0){
+            for(var i=0;i<localIds.length;i++){
+              var localId=localIds[i];
+              wx.uploadImage({//上传图片
+                localId: localId,
+                isShowProgressTips: 1,
+                success: function (res) {
+                  var serverId = res.serverId;
+                  AjaxPlugin.$http.post(
+                    "/wx/upload/img",
+                    {"data":serverId}
+                  ).then((res)=>{
+                    if(res.data && res.data.code==1){
+                      resolve(res.data.data);
+                    }else{
+                      reject(res);
+                    }
+                  }).catch((err)=>{
+                    reject(err);
+                  });
+                }
+              });
+            }
+          }
+        }
+      });
+    });
+  }else{
+    console.log('请预先初始化jssdk,比如wx.config({uploadImage:true})');
+    return Promise.reject('请预先初始化jssdk,比如wx.config({uploadImage:true})');
+  }
+}
+
+function getLocation(option){
+  if(option.getLocation){
+    return new Promise(function(resolve,reject){
+      wx.getLocation({
+        type: 'wgs84', // 默认
+        success: function (res) {
+          var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+          var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+          var speed = res.speed; // 速度，以米/每秒计
+          var accuracy = res.accuracy; // 位置精度
+          //TODO 转换成百度坐标系
+          console.log("经度="+longitude+",纬度="+latitude);
+          resolve({lng:longitude,lat:latitude});
+        },
+        cancel: function (res) {
+          Vue.$vux.toast.text("请在公众号设置允许获取获取位置","bottom");
+          resolve();
+        },
+        fail:function(res){
+          Vue.$vux.toast.text("获取位置失败，请稍后再试","bottom");
+          resolve();
+        }
+      });
+    });
+  }else{
+    return Promise.resolve();
+  }
+}
+export default wxUtil;

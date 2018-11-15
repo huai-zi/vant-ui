@@ -1,0 +1,105 @@
+/**
+ * Created by guofei on 2018/1/31.
+ */
+//工具
+export const reg_mobile = /^(((13[0-9]{1})|(14[579]{1})|(15[0-9]{1})|(17[0-9]{1})|(18[0-9]{1}))+\d{8})$/;//手机号
+export const reg_telphone=/^\d{3,4}(\-|\s)\d{3,8}((\-|\s)\d{1,5}){0,1}$/;//验证座机号
+export const reg_telphone_input=/^(\d|-|\s)+$/;//验证座机号输入
+export const reg_blank=/(^\s*)|(\s*$)/g;//去掉两边空格
+export const reg_number=/^[0-9]*$/;//纯数字
+
+export const deepCopy = (obj) => {
+  if (typeof obj !== 'object') return obj;
+  let result;
+  // try {
+  //   result = JSON.parse(JSON.stringify(obj));
+  // } catch (err) {
+  if (Array.isArray(obj)) {
+    result = [];
+    obj.forEach(item => {
+      result.push(typeof item === 'object' && !(item instanceof Date) ? deepCopy(item) : item);
+    });
+  } else {
+    result = {};
+    Object.keys(obj).forEach( key => {
+      result[key] = typeof obj[key] === 'object' && !(obj[key] instanceof Date) ?
+        deepCopy(obj[key]) : obj[key];
+    });
+  }
+  // }
+  return result;
+};
+//选择组件，封装成PopupPicker组件需要的数据格式
+export const formatPopupPicker=function(arr,value,name){
+  let child=[];
+  if(arr){
+    arr.forEach((obj)=>{
+      var data={};
+      data.name=obj[name];
+      data.value=obj[value];
+      child.push(data);
+    });
+  }
+  return [child];
+}
+
+//标准日期转换为2017-12-11格式
+export const formatDate = (dateType) => {
+  let date = new Date(dateType);
+  var y = date.getFullYear();
+  var m = date.getMonth() + 1;
+  m = m < 10 ? '0' + m : m;
+  var d = date.getDate();
+  d = d < 10 ? ('0' + d) : d;
+  return y + '-' + m + '-' + d;
+};
+
+export const loadScript=function(src){
+  return new Promise(function(resolve,reject){
+    if(src){
+      var head = document.getElementsByTagName('head');
+      if(head&&head.length){
+        head = head[0];
+      }else{
+        head = document.body;
+      }
+      let script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.src=src;
+      script.onload = script.onreadystatechange = function(){
+        if(  ! this.readyState || this.readyState=='loaded' || this.readyState=='complete'){
+          console.log(src+'文件script加载完毕,开启执行回调');
+          resolve();
+        }
+      };
+      head.appendChild(script);
+    }else{
+      reject("加载script失败，src="+src);
+    }
+  });
+}
+
+/** 转换对象数组为所需的键值对数组数据格式 */
+export const formatObjArrayToNameValueArray = function(objArray, name, value) {
+	let nameValueArray = [];
+	if(objArray) {
+		objArray.forEach((obj) => {
+			let nameValueObj = {};
+			nameValueObj.name = obj[name];
+			nameValueObj.value = obj[value];
+			nameValueArray.push(nameValueObj);
+		});
+	}
+	return nameValueArray;
+}
+
+/** 转换对象数组为所需的name数组数据格式 */
+export const formatObjArrayToNameArray = function(objArray, name) {
+	let nameArray = [];
+	if(objArray) {
+		objArray.forEach((obj) => {
+			nameArray.push(obj[name]);
+		});
+	}
+	return nameArray;
+}

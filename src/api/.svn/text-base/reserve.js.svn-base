@@ -1,0 +1,11 @@
+import AjaxPlugin from '@/utils/request'
+
+/** 提交预约 */
+export function reserve(param) {
+	const data = param || {};
+	return AjaxPlugin.$http({
+		url: '/medical-mobile/reserveorder/save',
+		method: 'post',
+		data
+	});
+}

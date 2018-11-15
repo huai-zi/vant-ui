@@ -1,0 +1,273 @@
+import Vue from 'vue'
+import Router from 'vue-router';
+import store from '@/store';
+import { loadScript } from "@/utils/common";
+import { queryOpenid } from "@/utils/auth";
+Vue.use(Router)
+
+const router = new Router({
+	routes: [{
+			path: '/',
+			name: 'layout',
+			component: resolve => require(['../pages/layout.vue'], resolve),
+			children: [{
+					path: 'personal/userInfo',
+					name: 'userInfo',
+					component: resolve => require(['../pages/user/personal/userInfo.vue'], resolve),
+					meta: {
+						title: '个人主页'
+					}
+				}, {
+					path: 'personal/consumerOrderlist',
+					name: 'consumerOrderlist',
+					component: resolve => require(['../pages/user/personal/consumerOrderlist.vue'], resolve),
+					meta: {
+						title: '消费记录'
+					}
+				}, {
+					path: 'personal/orderList',
+					name: 'orderList',
+					component: resolve => require(['../pages/user/personal/orderList.vue'], resolve),
+					meta: {
+						title: '预约记录'
+					}
+				}, {
+					path: 'personal/personalsecurity',
+					name: 'personalsecurity',
+					component: resolve => require(['../pages/user/personal/personalsecurity.vue'], resolve),
+					meta: {
+						title: '个人认证'
+					}
+				}, {
+					path: 'personal/reviewdataList',
+					name: 'reviewdataList',
+					component: resolve => require(['../pages/user/personal/reviewdataList.vue'], resolve),
+					meta: {
+						title: '测评信息'
+					}
+				}, {
+					path: 'personal/securityCenter',
+					name: 'securityCenter',
+					component: resolve => require(['../pages/user/personal/securityCenter.vue'], resolve),
+					meta: {
+						title: '安全中心'
+					}
+				}, {
+					path: 'personal/aboutus',
+					name: 'aboutus',
+					component: resolve => require(['../pages/user/personal/aboutus.vue'], resolve),
+					meta: {
+						title: '关于我们'
+					}
+				}, {
+					path: 'personal/orderrated/:id',
+					name: 'orderrated',
+					component: resolve => require(['../pages/user/personal/orderRated.vue'], resolve),
+					meta: {
+						title: '消费评价'
+					}
+				},
+				{
+					path: 'expend/expendCenter',
+					name: 'expendCenter',
+					component: resolve => require(['../pages/expend/expend-center.vue'], resolve),
+					meta: {
+						title: '消费中心'
+					}
+				},
+				{
+					path: 'testEvaluation/testEvaluation',
+					name: 'testEvaluation',
+					component: resolve => require(['../pages/testEvaluation/test-list.vue'], resolve),
+					meta: {
+						title: '测试列表'
+					}
+				},
+				{
+					path: 'testEvaluation/testQuestion/:id',
+					name: 'testQuestion',
+					component: resolve => require(['../pages/testEvaluation/test-question.vue'], resolve),
+					meta: {
+						title: '测试问题'
+					}
+				},
+				{
+					path: 'nearStore/nearStore',
+					name: 'nearStore',
+					component: resolve => require(['../pages/nearStore/index.vue'], resolve),
+					meta: {
+						title: '附近门店'
+					}
+				},
+				{
+					path: 'reserve/service-select',
+					name: 'reserve-service-select',
+					meta: {
+						title: '会员消费'
+					},
+					component: resolve => require(['../pages/reserve/service-select.vue'], resolve),
+				}, {
+					path: 'reserve/success',
+					name: 'reserve-success',
+					meta: {
+						title: '预约成功'
+					},
+					component: resolve => require(['../pages/reserve/success.vue'], resolve),
+				},{
+					path: 'store/home/:storeCode',
+					name: 'store-home',
+					meta: {
+						title: '店铺详情'
+					},
+					component: resolve => require(['../pages/store/home.vue'], resolve),
+					redirect: 'store/home/:storeCode/service-category',
+					children: [{
+						path: 'service-category',
+						name: 'store-service-category',
+						meta: {
+							title: '服务项目'
+						},
+						component: resolve => require(['../pages/store/service-category.vue'], resolve),
+					}, {
+						path: 'evaluate',
+						name: 'store-evaluate',
+						meta: {
+							title: '评价'
+						},
+						component: resolve => require(['../pages/store/evaluate.vue'], resolve),
+					}, {
+						path: 'introduction',
+						name: 'store-introduction',
+						meta: {
+							title: '关于商家'
+						},
+						component: resolve => require(['../pages/store/introduction.vue'], resolve),
+					}]
+				},{
+					path: 'store/my',
+					name: 'my-stores',
+					meta: {
+						title: '我的门店'
+					},
+					component: resolve => require(['../pages/store/my-stores.vue'], resolve),
+				},{
+					path: 'report/home',
+					name: 'report-home',
+					meta: {
+						title: '统计报表'
+					},
+					component: resolve => require(['../pages/report/home.vue'], resolve),
+					redirect: 'report/home/capital-gains',
+					children: [{
+						path: 'capital-gains',
+						name: 'capital-gains',
+						meta: {
+							title: '资金收益'
+						},
+						component: resolve => require(['../pages/report/capital-gains.vue'], resolve),
+					}, {
+						path: 'capital-gains-detail',
+						name: 'capital-gains-detail',
+						meta: {
+							title: '收入明细'
+						},
+						component: resolve => require(['../pages/report/capital-gains-detail.vue'], resolve),
+					}, {
+						path: 'business-data',
+						name: 'business-data',
+						meta: {
+							title: '业务数据'
+						},
+						component: resolve => require(['../pages/report/business-data.vue'], resolve),
+					}, {
+						path: 'business-data-detail',
+						name: 'business-data-detail',
+						meta: {
+							title: '业务明细'
+						},
+						component: resolve => require(['../pages/report/business-data-detail.vue'], resolve),
+					}, {
+						path: 'consumer-stat',
+						name: 'consumer-stat',
+						meta: {
+							title: '客户统计'
+						},
+						component: resolve => require(['../pages/report/consumer-stat.vue'], resolve),
+					}, {
+						path: 'stock-stat',
+						name: 'stock-stat',
+						meta: {
+							title: '出入库'
+						},
+						component: resolve => require(['../pages/report/stock-stat.vue'], resolve),
+					}]
+				}
+			]
+		},
+		{
+			path: '/login',
+			name: 'login',
+			component: resolve => require(['../pages/login.vue'], resolve),
+			meta: {
+				title: '登录'
+			}
+		},
+		{
+			path: '/user/personal/register',
+			name: 'userRegister',
+			component: resolve => require(['../pages/user/personal/register.vue'], resolve),
+			meta: {
+				title: '用户注册'
+			}
+		},
+		{
+			path: '/user/personal/comfirmcode/:id',
+			name: 'comfirmcode',
+			component: resolve => require(['../pages/user/personal/comfirmcode.vue'], resolve),
+		},
+		{
+			path: '/user/personal/markers',
+			name: 'markers',
+			component: resolve => require(['../pages/user/personal/markers.vue'], resolve),
+
+		},
+		{
+			path: '/openid', //测试页面路径，上线要删除
+			name: 'openid',
+			meta: {
+				auth: true
+			}, //验证route中meta:{auth:true},若为true，则进入页面前获取openid,否则不校验openid
+			component: resolve => require(['../pages/openid.vue'], resolve),
+
+		},
+
+	]
+})
+
+function routerInitScript(to, from, next) {
+	if(to.name=="expendCenter" || to.name == "nearStore") {
+		loadScript("http://api.map.baidu.com/getscript?v=2.0&ak=849NG4dkQo0aeOGR86Fx8C6OowkeyV9m").then(() => {
+			loadScript("http://api.map.baidu.com/library/TextIconOverlay/1.2/src/TextIconOverlay_min.js").then(() => {
+				loadScript("http://api.map.baidu.com/library/MarkerClusterer/1.2/src/MarkerClusterer_min.js").then(() => {
+					next();
+				});
+			});
+		});
+	} else {
+		next();
+	}
+}
+
+router.beforeEach((to, from, next) => {
+	store.dispatch('showLoading');
+	//入页面前校验openid
+	queryOpenid().then(()=>{
+		routerInitScript(to, from, next);
+	});
+})
+
+router.afterEach(() => {
+	store.dispatch('hideLoading');
+})
+
+export default router;

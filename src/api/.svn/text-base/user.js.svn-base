@@ -1,0 +1,65 @@
+import  AjaxPlugin  from '@/utils/request';
+//短信发送接口
+export const smsSendcode=function(data){
+	return AjaxPlugin.$http(data);
+}
+//用户注册接口
+export const userRegister = function(data){
+	return AjaxPlugin.$http(data);
+}
+
+//关注类型查询接口
+export const queryMarkers=function(data){
+	return AjaxPlugin.$http(data);
+}
+
+//保存用户关注类型接口
+export const addUsermarkers=function(data){
+	return AjaxPlugin.$http(data);
+}
+//查询测评结果接口
+export const queryQuestiontag=function(data){
+	return AjaxPlugin.$http(data);
+}
+//用户信息
+export const queryUserinfo=function(data){
+	return AjaxPlugin.$http(data);
+}
+//查询消费记录接口
+export const queryConsumerorders=function(data){
+	return AjaxPlugin.$http(data);
+}
+
+//消费记录评价接口
+export const orderRated=function(data){
+	return AjaxPlugin.$http(data);
+}
+
+//查询预约记录接口
+export const queryReserveorder=function(data){
+	return AjaxPlugin.$http(data);
+}
+
+//取消预约
+export const cacelorder=function(data){
+	return AjaxPlugin.$http(data);
+}
+
+//个人认证完善用户信息
+export const updateUserinfo=function(data){
+	return AjaxPlugin.$http(data);
+}
+//查询测评信息
+export const queryQuestiontags=function(data){
+	return AjaxPlugin.$http(data);
+}
+
+/** 获取用户类型 */
+export function getUserType(param) {
+	const data = param || {};
+	return AjaxPlugin.$http({
+		url: '/medical-mobile/wechatuser/getUserType',
+		method: 'post',
+		data
+	});
+}

@@ -1,0 +1,10 @@
+/** 常用变量定义 */
+
+//颜色
+@primary-color:#36CDCA; //主色调
+@text-color-title:#222; //主标题文字颜色
+@text-color-bg:#eff1f2; //主体间隔背景颜色
+@border-color-wrapper:#eff1f2; //区域边框颜色
+@border-color-btn:#c7c9c9; //按钮边框颜色
+@color-now-price:#FE9900; //当前价格颜色
+@color-old-price:#ccc; //原价字体颜色

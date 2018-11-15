@@ -1,0 +1,42 @@
+
+import AjaxPlugin from '@/utils/request'
+
+/** 获取门店服务项目列表 */
+export function getStoreCategoryList(param) {
+	const data = param || {};
+	return AjaxPlugin.$http({
+		url: '/medical-mobile/storecategory/list',
+		method: 'post',
+		data
+	});
+}
+
+/** 获取门店详细信息 */
+export function getStoreInfo(param) {
+	const data = param || {};
+	return AjaxPlugin.$http({
+		url: '/medical-mobile/store/info',
+		method: 'post',
+		data
+	});
+}
+
+/** 店长、管理员报表页获取我的门店列表 */
+export function getMyStoreList(param) {
+	const data = param || {};
+	return AjaxPlugin.$http({
+		url: '/medical-mobile/store/codeList',
+		method: 'post',
+		data
+	});
+}
+
+/** 获取门店的预约记录（门店详情页滚动显示） */
+export function getReserveOrderByStore(param) {
+	const data = param || {};
+	return AjaxPlugin.$http({
+		url: '/medical-mobile/reserveorder/listByStore',
+		method: 'post',
+		data
+	});
+}

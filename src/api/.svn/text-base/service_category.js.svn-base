@@ -1,0 +1,11 @@
+import AjaxPlugin from '@/utils/request'
+
+/** 获取服务类型列表 */
+export function getServiceCategoryList(param) {
+	const data = param || {};
+	return AjaxPlugin.$http({
+		url: '/medical-mobile/servicecategory/list',
+		method: 'post',
+		data
+	});
+}

@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/etskPlatform/!svn/ver/2872/medical-manage-wx-ui/src/api
+END
+evaluate.js
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/etskPlatform/!svn/ver/2564/medical-manage-wx-ui/src/api/evaluate.js
+END
+service_sub_category.js
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/etskPlatform/!svn/ver/2516/medical-manage-wx-ui/src/api/service_sub_category.js
+END
+login.js
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/etskPlatform/!svn/ver/2181/medical-manage-wx-ui/src/api/login.js
+END
+reserve.js
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/etskPlatform/!svn/ver/2508/medical-manage-wx-ui/src/api/reserve.js
+END
+stat.js
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/etskPlatform/!svn/ver/2872/medical-manage-wx-ui/src/api/stat.js
+END
+wechat.js
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/etskPlatform/!svn/ver/2525/medical-manage-wx-ui/src/api/wechat.js
+END
+store.js
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/etskPlatform/!svn/ver/2677/medical-manage-wx-ui/src/api/store.js
+END
+service_category.js
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/etskPlatform/!svn/ver/2516/medical-manage-wx-ui/src/api/service_category.js
+END
+user.js
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/etskPlatform/!svn/ver/2655/medical-manage-wx-ui/src/api/user.js
+END
+test.js
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/etskPlatform/!svn/ver/2525/medical-manage-wx-ui/src/api/test.js
+END
+expend.js
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/etskPlatform/!svn/ver/2616/medical-manage-wx-ui/src/api/expend.js
+END

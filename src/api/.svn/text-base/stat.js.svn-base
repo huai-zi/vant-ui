@@ -1,0 +1,40 @@
+/** 统计报表相关请求 */
+import AjaxPlugin from '@/utils/request'
+
+/** 
+ * 获取统计图表数据 
+ *   报表类型  reportIdList: 
+ * 	   1 - 今日收益图表    2 - 月总收益图表     108 - 今日工单金额      3 - 今日收益金额    4 - 月总收益金额
+ * 	   5 - 昨日收入趋势    6 - 最近7天收入趋势    7 - 最近30天收入趋势           
+ * 	   8 - 今日预约人数    9 - 今日就诊人数    10 - 昨日门诊趋势    11 - 最近7天门诊趋势  12 - 最近30天门诊趋势  
+ *     13 - 客户统计（按时间分布） 14 - 客户统计（按年龄分布） 
+ * 	   15 - 入库统计     16 - 出库统计    17 - 库存统计
+ * 	   
+ *   门店编号  storeCode
+ */
+export function getStatData(param) {
+	const data = param || {};
+	return AjaxPlugin.$http({
+		url: '/medical-mobile/sta/incomesta',
+		method: 'post',
+		data
+	});
+}
+
+/**
+ * 获取统计明细
+ *   报表类型  reportType
+ * 	   18 - 预约明细
+ *     19 - 就诊明细
+ *   门店编号  storeCode
+ *   开始时间  beginDate
+ *   结束时间  endDate
+ */
+export function getStatDetailData(param) {
+	const data = param || {};
+	return AjaxPlugin.$http({
+		url: '/medical-mobile/storeBusiness/details',
+		method: 'post',
+		data
+	});
+}

@@ -1,0 +1,26 @@
+import AjaxPlugin from '@/utils/request'
+
+export function getTestListName(param) {
+  return AjaxPlugin.$http.post(
+    "/medical-mobile/questionnaireinfo/list",
+    param
+  );
+}
+export function getTestQuestion(param) {
+  return AjaxPlugin.$http.post(
+    "/medical-mobile/questiontitle/list",
+    param
+  );
+}
+export function postTestQuestion(param) {
+  return AjaxPlugin.$http.post(
+    "/medical-mobile/questionuser/save",
+    param
+  );
+}
+export function getTestResult(param) {
+  return AjaxPlugin.$http.post(
+    "/medical-mobile/tbpatientuser/list",
+    param
+  );
+}
