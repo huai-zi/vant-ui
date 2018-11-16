@@ -18,7 +18,7 @@
 
 <script>
 	import { Group, Cell, XInput, XButton } from 'vux'
-	import { loginByUsername } from '@/api/login';
+	import { loginByUsername } from '@/api/index';
 	export default {
 		data() {
 			return {

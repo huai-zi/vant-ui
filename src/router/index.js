@@ -29,6 +29,30 @@ const router = new Router({
       }
     },
     {
+      path: '/lists',
+      name: 'lists',
+      component: resolve => require(['../pages/newlists/newlists.vue'], resolve),
+      meta: {
+        title: '新闻列表'
+      }
+    },
+    {
+      path: '/information',
+      name: 'information',
+      component: resolve => require(['../pages/newlists/information.vue'], resolve),
+      meta: {
+        title: '新闻详情'
+      }
+    },
+    {
+      path: '/monitor',
+      name: 'monitor',
+      component: resolve => require(['../pages/datemonitor/monitor.vue'], resolve),
+      meta: {
+        title: '实时监测'
+      }
+    },
+    {
       redirect: '/index',
       path: "/"
     },

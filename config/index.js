@@ -3,14 +3,13 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 
 const path = require('path')
-const API_WX_API = "http://192.168.1.211:9998"; //微信公众号接口api
 module.exports = {
 	dev: {
 		assetsSubDirectory: 'static',
 		assetsPublicPath: '/',
 		proxyTable: {
 			'/api': {
-				target: 'http://192.168.30.99:8000', // 接口的域名
+				target: 'http://120.77.215.143:8000', // 接口的域名
 				// secure: false,  // 如果是https接口，需要配置这个参数
 				changeOrigin: true, // 如果接口跨域，需要进行这个参数配置
 				pathRewrite: {
