@@ -1,12 +1,9 @@
+import api from './commonURL.js';
 import AjaxPlugin from '@/utils/request'
 
-export function loginByUsername(param) {
-	return AjaxPlugin.$http.post(
-		"/sys/login",
-		param
-	);
-}
 
-export function logout() {
-	return null;
+export function loginByUsername() {
+	return AjaxPlugin.$http.post(
+		api.index.weather
+	);
 }

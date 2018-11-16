@@ -29,7 +29,7 @@ const router = new Router({
       }
     },
     {
-      redirect: '/login',
+      redirect: '/index',
       path: "/"
     },
     {
@@ -41,6 +41,7 @@ const router = new Router({
 
 //路由守卫
 router.beforeEach((to, from, next) => {
+  store.dispatch('showLoading')
   next()
 })
 

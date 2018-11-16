@@ -1,6 +1,8 @@
 <template>
 	<div id="app">
+    <!-- 请求loading -->
 		<loading v-model="isLoading"></loading>
+    <!-- 请求警告 -->
 		<router-view></router-view>
 	</div>
 </template>
@@ -18,6 +20,8 @@ export default {
     ...mapState({
       isLoading: state => state.app.loading
     })
+  },
+  mounted(){
   }
 };
 </script>

@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import FastClick from 'fastclick'
-import MintUI from 'mint-ui';
+// import MintUI from 'mint-ui';
 import 'mint-ui/lib/style.css';
 import {LoadingPlugin, ToastPlugin, AlertPlugin,ConfirmPlugin} from 'vux'
-Vue.use(MintUI);
+// Vue.use(MintUI);
 import VueTouch from 'vue-touch'
 
 Vue.use(LoadingPlugin)
