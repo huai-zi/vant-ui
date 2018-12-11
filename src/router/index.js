@@ -4,14 +4,7 @@ import store from '@/store';
 Vue.use(Router)
 //进行路由的懒加载过程
 const router = new Router({
-  routes: [{
-      path: '/login',
-      name: 'login',
-      component: resolve => require(['../pages/login.vue'], resolve),
-      meta: {
-        title: '登录'
-      }
-    },
+  routes: [
     {
       path: '/404',
       name: '404',
@@ -26,30 +19,6 @@ const router = new Router({
       component: resolve => require(['../pages/index.vue'], resolve),
       meta: {
         title: '首页'
-      }
-    },
-    {
-      path: '/lists',
-      name: 'lists',
-      component: resolve => require(['../pages/newlists/newlists.vue'], resolve),
-      meta: {
-        title: '新闻列表'
-      }
-    },
-    {
-      path: '/information',
-      name: 'information',
-      component: resolve => require(['../pages/newlists/information.vue'], resolve),
-      meta: {
-        title: '新闻详情'
-      }
-    },
-    {
-      path: '/monitor',
-      name: 'monitor',
-      component: resolve => require(['../pages/datemonitor/monitor.vue'], resolve),
-      meta: {
-        title: '实时监测'
       }
     },
     {

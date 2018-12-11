@@ -1,14 +1,13 @@
-import {
-  getOpenId
-} from '@/utils/auth';
+
 import {
   AjaxPlugin
 } from 'vux';
 import router from '@/router';
 import store from '@/store';
+
 import {
   Toast
-} from 'mint-ui';
+} from 'vant';
 
 // request拦截器,只要有请求,则进行loading动画
 AjaxPlugin.$http.interceptors.request.use(config => {
